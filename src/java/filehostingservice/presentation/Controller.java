@@ -38,14 +38,15 @@ public class Controller implements Initializable {
         patronymicColumn.setCellValueFactory(param -> param.getValue().patronymic);
         birthDateColumn.setCellValueFactory(param -> param.getValue().birthDate);
         genderColumn.setCellValueFactory(param -> param.getValue().gender);
-        ///////////////////////////////////////////////////////////////////
-//        prepareDataBase();
-        onShowAllPersonsRequest();
+
+        //дропаем таблицу и создаем заново
+        prepareDataBase();
+//        onShowAllPersonsRequest();
     }
 
     public void prepareDataBase() {
         personDAO.createDataBase();
-        onAddNewPersonRequest();
+        onShowAllPersonsRequest();
     }
 
     public void onShowAllPersonsRequest() {
