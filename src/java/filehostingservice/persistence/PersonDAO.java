@@ -26,7 +26,9 @@ public class PersonDAO {
 
     private static String executeFirstQuery = "SELECT DISTINCT * FROM users GROUP BY concat(secondName, firstName, patronymic, birth) HAVING COUNT(*)>=1";
 
-    private static String executeSecondQuery = "SELECT * FROM users WHERE left(secondName, 1) = 'ф' AND sex = 'male'";
+//    private static String executeSecondQuery = "SELECT * FROM users WHERE left(secondName, 1) = 'ф' AND sex = 'male'";
+
+    private static String executeSecondQuery = "SELECT * FROM users WHERE secondName like 'ф%' AND sex = 'male'";
 
     private static String isIndexExistQuery = "SHOW INDEX FROM users WHERE KEY_NAME = 'sex'";
 
