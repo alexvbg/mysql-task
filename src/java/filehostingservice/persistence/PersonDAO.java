@@ -20,7 +20,7 @@ public class PersonDAO {
 
     private static String insertNewPersonQuery =
             "insert into users(firstName, secondName, patronymic, sex, birth)"
-            + " values (?, ?, ?, ?, ?)";
+                    + " values (?, ?, ?, ?, ?)";
 
     private static String getHumansQuery = "SELECT * FROM users";
 
@@ -167,15 +167,37 @@ public class PersonDAO {
 
             persons.add(person);
         }
-        persons.forEach(this::savePerson);
-//        try {
-////            connection.setAutoCommit(false);
-//            persons.forEach(this::savePerson);
-////            connection.commit();
-////            connection.setAutoCommit(true);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(insertNewPersonQuery);
+            connection.setAutoCommit(false);
+            for (int i = 0; i < persons.size(); i++) {
+                Person person = persons.get(i);
+
+                preparedStatement.setString(1, person.firstName.getValue());
+                preparedStatement.setString(2, person.secondName.getValue());
+                preparedStatement.setString(3, person.patronymic.getValue());
+                preparedStatement.setString(4, person.gender.getValue());
+                preparedStatement.setString(5, person.birthDate.getValue());
+
+                preparedStatement.execute();
+                if (i % 10000 == 0) {
+                    System.out.println("i = " + i);
+                    connection.commit();
+
+                }
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean deletePerson(Person person) {
@@ -202,6 +224,7 @@ public class PersonDAO {
             preparedStatement.setString(5, person.birthDate.getValue());
 
             preparedStatement.execute();
+            preparedStatement.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
