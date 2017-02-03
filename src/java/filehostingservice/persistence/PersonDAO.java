@@ -46,7 +46,7 @@ public class PersonDAO {
             " secondName varchar(30)," +
             " patronymic varchar(30)," +
             " sex boolean," +
-            " birth date)";
+            " birth date) ENGINE = MEMORY";
 
 
     private final Connection connection;
@@ -179,7 +179,7 @@ public class PersonDAO {
                 preparedStatement.setString(1, person.firstName.getValue());
                 preparedStatement.setString(2, person.secondName.getValue());
                 preparedStatement.setString(3, person.patronymic.getValue());
-                preparedStatement.setString(4, person.gender.getValue());
+                preparedStatement.setString(4, person.gender.getBooleanValue());
                 preparedStatement.setString(5, person.birthDate.getValue());
 
                 preparedStatement.execute();
@@ -222,7 +222,7 @@ public class PersonDAO {
             preparedStatement.setString(2, person.secondName.getValue());
             preparedStatement.setString(3, person.patronymic.getValue());
 //            preparedStatement.setString(4, person.gender.getValue());
-            preparedStatement.setString(4, person.gender.getValue());
+            preparedStatement.setString(4, person.gender.getBooleanValue());
             preparedStatement.setString(5, person.birthDate.getValue());
 
             preparedStatement.execute();

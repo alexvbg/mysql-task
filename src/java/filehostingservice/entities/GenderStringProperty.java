@@ -17,9 +17,8 @@ public class GenderStringProperty extends SimpleStringProperty {
         }
     }
 
-    @Override
-    public String getValue() {
-        String gender = super.getValue();
+    public String getBooleanValue() {
+        String gender = this.getValue();
         String b = new String();
         try {
             if (gender.equals(Gender.MALE.name())) {
@@ -34,5 +33,23 @@ public class GenderStringProperty extends SimpleStringProperty {
         }
         return b;
     }
+
+//    @Override
+//    public String getValue() {
+//        String gender = super.getValue();
+//        String b = new String();
+//        try {
+//            if (gender.equals(Gender.MALE.name())) {
+//                b = "1";
+//            } else if (gender.equals(Gender.FEMALE.name())) {
+//                b = "0";
+//            } else {
+//                throw new IOException("Type cast exeption");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return b;
+//    }
 
 }
