@@ -19,33 +19,33 @@ public class PersonDAO {
     private static String deleteHumanQuery = "";
 
     private static String insertNewPersonQuery =
-            "insert into users(firstName, secondName, patronymic, sex, birth)"
+            "insert into persons(firstName, secondName, patronymic, sex, birth)"
                     + " values (?, ?, ?, ?, ?)";
 
-    private static String getHumansQuery = "SELECT * FROM users";
+    private static String getHumansQuery = "SELECT * FROM persons";
 
-    private static String executeFirstQuery = "SELECT DISTINCT * FROM users GROUP BY concat(secondName, firstName, patronymic, birth) HAVING COUNT(*)>=1";
+    private static String executeFirstQuery = "SELECT DISTINCT * FROM persons GROUP BY concat(secondName, firstName, patronymic, birth) HAVING COUNT(*)>=1";
 
 //    private static String executeSecondQuery = "SELECT * FROM users WHERE left(secondName, 1) = 'ф' AND sex = 'male'";
 
-    private static String executeSecondQuery = "SELECT * FROM users WHERE secondName like 'ф%' AND sex = 'male'";
+    private static String executeSecondQuery = "SELECT * FROM persons WHERE secondName like 'ф%' AND sex = '1'";
 
-    private static String isIndexExistQuery = "SHOW INDEX FROM users WHERE KEY_NAME = 'sex'";
+    private static String isIndexExistQuery = "SHOW INDEX FROM persons WHERE KEY_NAME = 'sex'";
 
-    private static String createIndexQuery = "ALTER TABLE `users` ADD INDEX `sex` (`sex`)";
+    private static String createIndexQuery = "ALTER TABLE `persons` ADD INDEX `sex` (`sex`)";
 
-    private static String dropIndexQuery = "ALTER TABLE users DROP INDEX sex";
+    private static String dropIndexQuery = "ALTER TABLE persons DROP INDEX sex";
 
     private static String createDataBase = "CREATE DATABASE PTMKtest";
 
-    private static String dropTableQuery = "DROP TABLE IF EXISTS `users`";
+    private static String dropTableQuery = "DROP TABLE IF EXISTS `persons`";
 
-    private static String createTableQuery = "CREATE TABLE PTMKtest.users " +
+    private static String createTableQuery = "CREATE TABLE PTMKtest.persons " +
             "(id int auto_increment primary key," +
             " firstName varchar(30)," +
             " secondName varchar(30)," +
             " patronymic varchar(30)," +
-            " sex varchar(10)," +
+            " sex boolean," +
             " birth date)";
 
 
@@ -64,7 +64,7 @@ public class PersonDAO {
                 person.firstName.set(resultSet.getString("firstName"));
                 person.secondName.set(resultSet.getString("secondName"));
                 person.patronymic.set(resultSet.getString("patronymic"));
-                person.gender.set(resultSet.getString("sex"));
+                person.gender.set(resultSet.getBoolean("sex"));
                 person.birthDate.set(resultSet.getDate("birth").toString());
                 personList.add(person);
             }
@@ -84,7 +84,8 @@ public class PersonDAO {
                 person.firstName.set(resultSet.getString("firstName"));
                 person.secondName.set(resultSet.getString("secondName"));
                 person.patronymic.set(resultSet.getString("patronymic"));
-                person.gender.set(resultSet.getString("sex"));
+//                person.gender.set(resultSet.getString("sex"));
+                person.gender.set(resultSet.getBoolean("sex"));
                 person.birthDate.set(resultSet.getDate("birth").toString());
                 personList.add(person);
             }
@@ -220,6 +221,7 @@ public class PersonDAO {
             preparedStatement.setString(1, person.firstName.getValue());
             preparedStatement.setString(2, person.secondName.getValue());
             preparedStatement.setString(3, person.patronymic.getValue());
+//            preparedStatement.setString(4, person.gender.getValue());
             preparedStatement.setString(4, person.gender.getValue());
             preparedStatement.setString(5, person.birthDate.getValue());
 
@@ -242,7 +244,8 @@ public class PersonDAO {
                 person.firstName.set(resultSet.getString("firstName"));
                 person.secondName.set(resultSet.getString("secondName"));
                 person.patronymic.set(resultSet.getString("patronymic"));
-                person.gender.set(resultSet.getString("sex"));
+//                person.gender.set(resultSet.getString("sex"));
+                person.gender.set(resultSet.getBoolean("sex"));
                 person.birthDate.set(resultSet.getDate("birth").toString());
                 personList.add(person);
             }
